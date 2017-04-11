@@ -32,6 +32,7 @@
 	display: -moz-flex;
 	justify-content: space-around;
 	align-items: center;
+	background: #f2f3f5;
 }
 
 /*#add {

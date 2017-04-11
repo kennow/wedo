@@ -1,16 +1,25 @@
 <template>
 <div id="lists-box">
-<div id=""></div>
-<ul>
-<li v-for='list in lists'>
-111  {{ list.title }}
-</li>
-</ul>
+<div id="side-bar">
+	<div class="select">
+		
+	</div>
+	<div class="select">
+		
+	</div>
+</div>
+<div id="lists">
+	<ul>
+	<li v-for='list in lists'>
+	{{ list.title }}
+	</li>
+	</ul>
+</div>
 <my-footer></my-footer>
 </div>
 </template>
 <script>
-
+import { mapState } from 'vuex'
 import Footer from '@/components/footer'
 export default {
 	name: 'lists',
@@ -20,9 +29,7 @@ export default {
 		}
 	},
 	computed: {
-		lists() {
-			return this.$store.state.lists
-		}
+		...mapState(['lists'])
 	},
 	components: {
 		'my-footer': Footer
@@ -30,14 +37,43 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #lists-box {
-/*	position: absolute;
-	top: 10vh;
-	left: 0;*/
 	width: 100vw;
-	height: 90vh;
-	z-index: 1;
-	text-align: left;
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+#side-bar {
+	width: 100vw;
+	height: 6vh;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.select {
+	width: 50%;
+	height: 100%;
+	border: 1px solid #f2f3f5;;
+	background: #fff;
+}
+
+#lists {
+	width: 100vw;
+}
+
+#lists ul {
+	padding: 0;
+	margin-top: 2vh;
+}
+
+#lists li {
+	height: 6vh;
+	list-style-type: none;
+	background-color: #fff;
+	border-bottom: 0.2rem solid #f2f3f5;
+	font-size: 1.2rem;
+	padding: 1rem;
 }
 </style>

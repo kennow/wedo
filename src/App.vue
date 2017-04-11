@@ -15,7 +15,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,7 +27,7 @@ body {
 
 .view {
   position: absolute;
-  top: 9vh;
+  top: 10.6vh;
   left: 0;
 }
 </style>

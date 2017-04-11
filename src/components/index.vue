@@ -3,7 +3,7 @@
 <div id="header">
 	<a href="/" id="back">&lt;</a>
 	<span id="title">wedo</span>
-	<a href="/more" id="more">...</a>
+	<a href="/more" id="more"><img src="../assets/ec.svg" alt=""></a>
 </div>
 </div>
 </template>
@@ -21,20 +21,25 @@ export default {
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	z-index: -1;
+	display: flex;
+	align-items: flex-start;
+	background-color: #f2f3f5;
 }
 #header {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100vw;
-	max-height: 6vh;
+	height: 10vh;
 	font-size: 2rem;
 	color: #fff;
-	padding: 2vh 0;
 	text-align: center;
 	background-color: green;
-	z-index: 0;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-around;
+	align-items: center;
+	z-index: 100;
 }
 
 #header a{
@@ -42,18 +47,4 @@ export default {
 	text-decoration: none;
 }
 
-#title {
-	/*margin: 0 30vw 0 34vw;*/
-}
-
-#back {
- position: absolute;
- left: 3vw;
-}
-
-#more {
-	position: absolute;
-	right: 3vw;
-	top: 1vh;
-}
 </style>

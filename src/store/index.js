@@ -19,7 +19,11 @@ const store = new Vuex.Store({
 			  details: ['wedo', 'wedo', 'wedo']
 			 }
 		],
-		count: 0
+		newlist: {
+			title: '未命名清单',
+			date: '',
+			details: []
+		}
 	},
 	mutations: {
 
