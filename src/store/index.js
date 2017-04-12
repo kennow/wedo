@@ -22,14 +22,25 @@ const store = new Vuex.Store({
 		newlist: {
 			title: '未命名清单',
 			date: '',
-			details: []
+			details: [
+			{ isChecked: true,
+			  content: 'jiajia'
+			},
+			{ isChecked: true,
+			  content: 'jiajia'
+			}
+			]
 		}
 	},
 	mutations: {
 		gettitle(state , val) {
-			let date = Date.now()
-			state.newlist.title = val.newtitle,
-			state.newlist.date = date
+			let date = Date.now();
+			state.newlist.title = val.newtitle;
+			state.newlist.date = date;
+		},
+		addlist(state, payload) {
+			let list = payload.detail;
+			state.newlist.details.push(list);
 		}
 	}
 
