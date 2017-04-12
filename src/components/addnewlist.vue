@@ -3,12 +3,11 @@
 	<input id="addtitle" @input='gettitle'  type="text" name="title" :value='newlist.title'>
 	<ul>
 	<li v-for='(newlist, index) in newlist.details'><input id="checkbox" type="checkbox" :checked = 'newlist.isChecked'> 
-		<input id="addlist" type="text">
+		<input @input='change'  id="addlist" type="text" :value='newlist.content' :checked='newlist.isChecked' :name='index'>
 	</li>
 	</ul>
-	<input type="button" @click='addlist' value="添加">
-	{{ newlist.title }}
-	<p>{{ newlist.date }}</p>
+	<input id="add" type="button" @click='addlist' value="添加">
+	<a href='/'><button id="save" @click='getlist'>保存</button></a>
 </div>
 </template>
 
@@ -18,7 +17,7 @@ import { mapMutations } from 'vuex'
 export default {
 	name: 'addnewlist',
 	computed: {
-		...mapState(['newlist'])
+		...mapState(['newlist', 'lists'])
 	},
 	methods: {
 		gettitle(e) {
@@ -26,7 +25,7 @@ export default {
 				newtitle: e.target.value
 				 })
 		},
-		addlist: function(e) {
+		addlist(e) {
 			this.$store.commit('addlist',
 			{
 			  detail: {
@@ -34,6 +33,18 @@ export default {
 			  	content: ''
 			  }	
 			})
+		},
+		change(e) {
+			this.$store.commit('change', {
+				index: e.target.name,
+				detail:{
+				isChecked: e.target.checked,
+				content: e.target.value
+				}
+			})
+		},
+		getlist() {
+			this.$store.commit('add')
 		}
 	}
 
@@ -72,5 +83,22 @@ li {
 	height: 4.4vh;
 	width: 96vw;
 	border: none;
+}
+
+#add {
+	background-color: green;
+	color: #fff;
+	width: 100vw;
+	height: 5vh;
+}
+
+#save {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 6vh;
+	background-color: green;
+	color: #fff;
 }
 </style>

@@ -23,11 +23,8 @@ const store = new Vuex.Store({
 			title: '未命名清单',
 			date: '',
 			details: [
-			{ isChecked: true,
-			  content: 'jiajia'
-			},
-			{ isChecked: true,
-			  content: 'jiajia'
+			{ isChecked: false,
+			  content: 'coding'
 			}
 			]
 		}
@@ -41,6 +38,13 @@ const store = new Vuex.Store({
 		addlist(state, payload) {
 			let list = payload.detail;
 			state.newlist.details.push(list);
+		},
+		change(state, payload) {
+			state.newlist.details.splice(payload.index, 1, payload.detail)
+		},
+		add(state) {
+			let list = state.newlist;
+			state.lists.push(list);
 		}
 	}
 
