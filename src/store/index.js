@@ -26,7 +26,11 @@ const store = new Vuex.Store({
 		}
 	},
 	mutations: {
-
+		gettitle(state , val) {
+			let date = Date.now()
+			state.newlist.title = val.newtitle,
+			state.newlist.date = date
+		}
 	}
 
 })

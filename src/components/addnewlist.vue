@@ -1,19 +1,30 @@
 <template>
 <div>
-	<input  v-bind='title' type="text" name="title">
-	{{ title }}
+	<input  @input='gettitle'  type="text" name="title" :value='listtitle'>
+
+	{{ listtitle }}
+	<p>{{ listdate }}</p>
 </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
-name: 'addnewlist',
-computed: {
-	...mapState({
-		title: state => state.newlist.title
-	})
-}
+	name: 'addnewlist',
+	computed: {
+		...mapState({
+			listtitle: state => state.newlist.title,
+			listdate: state => state.newlist.date
+		})
+	},
+	methods: {
+		gettitle(e) {
+			this.$store.commit('gettitle', { 
+				newtitle: e.target.value
+				 })
+		}
+	}
 
 }
 </script>
