@@ -3,12 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store'
+import axios from 'axios'
 import router from './router'
 import { sync } from 'vuex-router-sync'
 
 // Vue.config.productionTip = false
 
 sync(store, router)
+Vue.prototype.$http = axios
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

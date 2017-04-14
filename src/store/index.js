@@ -6,28 +6,11 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		lists: [
-			{ title: 'who are you',
-			  date: '1970/01/01/00/00/00',
-			  details: ['wedo', 'wedo', 'wedo']
-			 },
-			 { title: 'who are you',
-			  date: '1970/01/01/00/00/00',
-			  details: ['wedo', 'wedo', 'wedo']
-			 },
-			 { title: 'who are you',
-			  date: '1970/01/01/00/00/00',
-			  details: ['wedo', 'wedo', 'wedo']
+			{ title: '',
+			  date: '',
+			  details: []
 			 }
-		],
-		newlist: {
-			title: '未命名清单',
-			date: '',
-			details: [
-			{ isChecked: false,
-			  content: 'coding'
-			}
-			]
-		}
+		]
 	},
 	mutations: {
 		gettitle(state , val) {

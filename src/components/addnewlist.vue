@@ -1,53 +1,56 @@
 <template>
 <div>
-	<input id="addtitle" @input='gettitle'  type="text" name="title" :value='newlist.title'>
+	<input id="addtitle" type="text" name="title" v-model='newlist.title'>
 	<ul>
-	<li v-for='(newlist, index) in newlist.details'><input id="checkbox" type="checkbox" :checked = 'newlist.isChecked'> 
-		<input @input='change'  id="addlist" type="text" :value='newlist.content' :checked='newlist.isChecked' :name='index'>
+	<li v-for='(newlist, index) in newlist.details'><input id="checkbox" type="checkbox"> 
+		<input  id="addlist" @input='adddetail' type="text" :name='index'>
 	</li>
 	</ul>
 	<input id="add" type="button" @click='addlist' value="添加">
-	<a href='/'><button id="save" @click='getlist'>保存</button></a>
+	<a href='/'><button id="save" @click='savelist'>保存</button></a>
+	{{ newlist.title }}
 </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapMutations } from 'vuex'
 export default {
 	name: 'addnewlist',
-	computed: {
-		...mapState(['newlist', 'lists'])
-	},
-	methods: {
-		gettitle(e) {
-			this.$store.commit('gettitle', { 
-				newtitle: e.target.value
-				 })
-		},
-		addlist(e) {
-			this.$store.commit('addlist',
-			{
-			  detail: {
-			  	isChecked: false,
-			  	content: ''
-			  }	
-			})
-		},
-		change(e) {
-			this.$store.commit('change', {
-				index: e.target.name,
-				detail:{
-				isChecked: e.target.checked,
-				content: e.target.value
-				}
-			})
-		},
-		getlist() {
-			this.$store.commit('add')
+	data() {
+		return {
+		newlist: {
+			title: '未命名清单',
+			details: [],
+			create_at: Date.now().toString(),
+			update_at: Date.now().toString()
 		}
 	}
-
+	},
+	methods: {
+		addlist() {
+			this.newlist.details.push('点击编辑')
+		},
+		adddetail: function(event) {
+			this.newlist.details.splice(event.target.name, 1, event.target.value)
+		},
+		savelist() {
+		  this.$http.post('/api/list', {
+		  	title: this.newlist.title,
+		  	details: this.newlist.details,
+		  	create_at: this.newlist.create_at,
+		  	update_at: this.newlist.update_at
+		  })
+		  .then(res => {
+		  	console.log(res.data)
+		  	this.newlist.title = '未命名清单'
+		  	this.newlist.details = []
+		  	this.newlist.create_at = Date.now().toString()
+		  	this.newlist.update_at = Date.now().toString()
+		  })
+		  .catch(e => {
+		  	console.log(e)
+		  })
+		}
+	}
 }
 </script>
 

@@ -25,14 +25,26 @@ export default {
 	name: 'lists',
 	data() {
 		return {
-			
+			lists: []
 		}
 	},
-	computed: {
-		...mapState(['lists'])
+	created() {
+		this.getlists()
 	},
 	components: {
 		'my-footer': Footer
+	},
+	methods: {
+		getlists() {
+			this.$http.get('/api/list')
+			.then(res => {
+				console.dir(res.data)
+				this.lists = res.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		}
 	}
 }
 </script>
