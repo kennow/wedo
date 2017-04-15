@@ -2,13 +2,14 @@
 <div>
 	<input id="addtitle" type="text" name="title" v-model='newlist.title'>
 	<ul>
-	<li v-for='(newlist, index) in newlist.details'><input id="checkbox" type="checkbox"> 
-		<input  id="addlist" @input='adddetail' type="text" :name='index'>
+	<li v-for='(newlist, index) in newlist.details'>
+	   <input id="checkbox" type="checkbox" @click = 'ischecked' :name='index'> 
+	   <input  id="addlist" @input='adddetail' type="text" :name='index'>
 	</li>
 	</ul>
-	<input id="add" type="button" @click='addlist' value="添加">
+	<div id="add" type="button" @click='addlist'><span>+</span>添加</div>
 	<a href='/'><button id="save" @click='savelist'>保存</button></a>
-	{{ newlist.title }}
+	<!-- {{ newlist.title }} -->
 </div>
 </template>
 
@@ -21,23 +22,29 @@ export default {
 			title: '未命名清单',
 			details: [],
 			create_at: Date.now().toString(),
-			update_at: Date.now().toString()
+			update_at: Date.now().toString(),
+			isChecked: []
 		}
 	}
 	},
 	methods: {
 		addlist() {
 			this.newlist.details.push('点击编辑')
+			this.newlist.isChecked.push(false)
 		},
 		adddetail: function(event) {
 			this.newlist.details.splice(event.target.name, 1, event.target.value)
+		},
+		ischecked(event) {
+			this.newlist.isChecked.splice(event.target.name, 1, event.target.checked)
 		},
 		savelist() {
 		  this.$http.post('/api/list', {
 		  	title: this.newlist.title,
 		  	details: this.newlist.details,
 		  	create_at: this.newlist.create_at,
-		  	update_at: this.newlist.update_at
+		  	update_at: this.newlist.update_at,
+		  	isChecked: this.newlist.isChecked
 		  })
 		  .then(res => {
 		  	console.log(res.data)
@@ -91,8 +98,13 @@ li {
 #add {
 	background-color: green;
 	color: #fff;
-	width: 100vw;
+	width: 20vw;
 	height: 5vh;
+	margin-top: 2vh;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 }
 
 #save {

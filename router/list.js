@@ -23,4 +23,28 @@ router.post('/list', (req, res) => {
 		}
 	})
 })
+//通过ObjectId查询单个list
+router.get('/list/:id', (req, res) => {
+	List.findById(req.params.id)
+	.then(list => {
+		res.json(list)
+	})
+	.catch(err => {
+		res.json(err)
+	})
+})
+//更新list
+router.put('/list/:id', (req, res) => {
+	List.findOneAndUpdate({_id: req.params.id},
+		{$set: { title: req.body.title,
+			details: req.body.details,
+			create_at: req.body.create_at,
+			update_at: req.body.update_at,
+			isChecked: req.body.isChecked
+		 }}, {
+		 	new : true
+		 })
+		.then(list => res.json(list))
+		.catch(err => res.json(err))
+})
 module.exports = router

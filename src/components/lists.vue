@@ -11,7 +11,8 @@
 <div id="lists">
 	<ul>
 	<li v-for='list in lists'>
-	{{ list.title }}
+	<router-link :to="{ name: 'detail', params: { id: list._id }}"> {{ list.title }} </router-link>
+	<span> {{ }}年12月6日12:50 </span>
 	</li>
 	</ul>
 </div>
@@ -20,26 +21,32 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import Footer from '@/components/footer'
 export default {
 	name: 'lists',
 	data() {
 		return {
-			lists: []
 		}
 	},
 	created() {
 		this.getlists()
+	},
+	computed: {
+	 ...mapState(['lists'])
 	},
 	components: {
 		'my-footer': Footer
 	},
 	methods: {
 		getlists() {
-			this.$http.get('/api/list')
+			this.$http.get ('/api/list')
 			.then(res => {
 				console.dir(res.data)
-				this.lists = res.data
+				this.$store.dispatch('changelist', {
+       			lists:  res.data
+       		   })
 			})
 			.catch(err => {
 				console.log(err)
@@ -81,11 +88,22 @@ export default {
 }
 
 #lists li {
-	height: 6vh;
+	height: 10vh;
 	list-style-type: none;
 	background-color: #fff;
 	border-bottom: 0.2rem solid #f2f3f5;
 	font-size: 1.2rem;
-	padding: 1rem;
+	padding-left: 1rem;
+	flex-direction: column;
+	display: flex;
+	justify-content: center;
+}
+a {
+	text-decoration: none;
+	color: #000;
+}
+span {
+	font-size: 0.8rem;
+	opacity: 0.5;
 }
 </style>
