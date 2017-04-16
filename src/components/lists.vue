@@ -12,7 +12,12 @@
 	<ul>
 	<li v-for='list in lists'>
 	<router-link :to="{ name: 'detail', params: { id: list._id }}"> {{ list.title }} </router-link>
-	<span> {{ }}年12月6日12:50 </span>
+	<span>
+	 {{ new Date(list.create_at).getFullYear() }} 年{{ new Date(list.create_at).getMonth() + 1 }}月
+	{{ new Date(list.create_at).getDate() + 1 }}日
+	{{ new Date(list.create_at).getHours() }}:
+	{{ new Date(list.create_at).getMinutes() }}
+	 </span>
 	</li>
 	</ul>
 </div>
