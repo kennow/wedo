@@ -80,7 +80,7 @@ ul {
 }
 li {
 	width: 100vw;
-	height: 5vh;
+	height: 6vh;
 	margin: 1vh 0;
 	border-bottom: 1px solid #fff;
 	background-color: #fff;

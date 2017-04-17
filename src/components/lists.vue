@@ -10,7 +10,7 @@
 </div>
 <div id="lists">
 	<ul>
-	<li v-for='list in lists'>
+	<li v-for='(list, index) in lists' @touchstart='touchstart' @touchend='touchend'>
 	<router-link :to="{ name: 'detail', params: { id: list._id }}"> {{ list.title }} </router-link>
 	<span>
 	 {{ new Date(list.create_at).getFullYear() }} 年{{ new Date(list.create_at).getMonth() + 1 }}月
@@ -18,6 +18,7 @@
 	{{ new Date(list.create_at).getHours() }}:
 	{{ new Date(list.create_at).getMinutes() }}
 	 </span>
+	 <div id="delete" :value='index' v-if="seen[index]">删除</div>
 	</li>
 	</ul>
 </div>
@@ -33,10 +34,14 @@ export default {
 	name: 'lists',
 	data() {
 		return {
+		 pageX: '',
+		 pageY: '',
+		 seen: []
 		}
 	},
 	created() {
-		this.getlists()
+		this.getlists(),
+		this.setSeen()
 	},
 	computed: {
 	 ...mapState(['lists'])
@@ -56,9 +61,30 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+		},
+		touchstart(event) {
+			this.pageX = event.touches[0].pageX;
+			this.pageY = event.touches[0].pageY;
+			console.log(this.pageX, this.pageY)
+		},
+		touchend(event) {
+			let endPageX = event.changedTouches[0].pageX;
+			let endPageY = event.changedTouches[0].pageY;
+			let distanceX = this.pageX - endPageX;
+			let distanceY = this.pageY - endPageY;
+			if(distanceY < 60 && distanceX > 80)
+			{
+				 this.seen.splice(event.target.value, 1, true)
+			}
+		},
+		setSeen() {
+			for(let i = 0; i < this.lists.length; i++) {
+			this.seen.push(false)
+		}
 		}
 	}
 }
+
 </script>
 
 <style scoped>
@@ -100,6 +126,7 @@ export default {
 	font-size: 1.2rem;
 	padding-left: 1rem;
 	flex-direction: column;
+	flex-wrap: wrap;
 	display: flex;
 	justify-content: center;
 }
@@ -110,5 +137,12 @@ a {
 span {
 	font-size: 0.8rem;
 	opacity: 0.5;
+}
+#delete {
+	padding: 0.5rem 1rem;
+	background: red;
+	align-self: flex-end;
+	margin-right: 2vw;
+	z-index: 0;
 }
 </style>
