@@ -10,7 +10,7 @@
 </div>
 <div id="lists">
 	<ul>
-	<li v-for='(list, index) in lists' @touchstart='touchstart' @touchend='touchend'>
+	<li v-for='(list, index) in lists' @touchstart='touchstart' @touchend='touchend($event,index, setseen)'>
 	<router-link :to="{ name: 'detail', params: { id: list._id }}"> {{ list.title }} </router-link>
 	<span>
 	 {{ new Date(list.create_at).getFullYear() }} 年{{ new Date(list.create_at).getMonth() + 1 }}月
@@ -18,7 +18,7 @@
 	{{ new Date(list.create_at).getHours() }}:
 	{{ new Date(list.create_at).getMinutes() }}
 	 </span>
-	 <div id="delete" :value='index' v-if="seen[index]">删除</div>
+	 <div id="delete"  v-if="seen[index]">删除</div>
 	</li>
 	</ul>
 </div>
@@ -40,8 +40,7 @@ export default {
 		}
 	},
 	created() {
-		this.getlists(),
-		this.setSeen()
+		this.getlists()
 	},
 	computed: {
 	 ...mapState(['lists'])
@@ -67,18 +66,22 @@ export default {
 			this.pageY = event.touches[0].pageY;
 			console.log(this.pageX, this.pageY)
 		},
-		touchend(event) {
+		touchend(event, index, setseen) {
 			let endPageX = event.changedTouches[0].pageX;
 			let endPageY = event.changedTouches[0].pageY;
 			let distanceX = this.pageX - endPageX;
 			let distanceY = this.pageY - endPageY;
 			if(distanceY < 60 && distanceX > 80)
 			{
-				 this.seen.splice(event.target.value, 1, true)
+				setseen()
+				// console.log(this.seen)
+				this.seen.splice(index, 1, true)
+				// console.log(this.seen)
 			}
 		},
-		setSeen() {
-			for(let i = 0; i < this.lists.length; i++) {
+		setseen() {
+			let len = this.lists.length;
+			for(let i = 0; i < len; i++){
 			this.seen.push(false)
 		}
 		}
