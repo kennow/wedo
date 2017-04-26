@@ -22,6 +22,11 @@ export default new Router({
       path: '/list/:id',
       name: 'detail',
       component: Detail
-    }
+    },
+    {
+    path: '/list/:id',
+    name: 'delete',
+    component: Lists
+  }
   ]
 })

@@ -18,7 +18,11 @@
 	{{ new Date(list.create_at).getHours() }}:
 	{{ new Date(list.create_at).getMinutes() }}
 	 </span>
-	 <div id="delete"  v-if="seen[index]">删除</div>
+	 <div id="delete"  v-if="seen[index]">
+	 <router-link :to="{ name: 'delete', params: { id: list._id}}" @click="deletelist">
+	 删除
+	 </router-link>
+	 </div>
 	</li>
 	</ul>
 </div>
@@ -84,6 +88,9 @@ export default {
 			for(let i = 0; i < len; i++){
 			this.seen.push(false)
 		}
+		},
+		deletelist() {
+			this.$http.delete('/api/list/' + this.$route.params.id)
 		}
 	}
 }
