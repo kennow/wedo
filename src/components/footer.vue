@@ -7,8 +7,8 @@
 	<a href="/add" class="table-btn" id="add-btn"> +
 	</a>
 	<a href='/help' class="table-btn  lists">
-	<img src="../assets/help.svg" alt="">
-	<span>帮助</span>
+	<img src="../assets/my.svg" alt="">
+	<span>我</span>
 	</a>
 		
 	</div>

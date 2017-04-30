@@ -11,6 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'lists',
+      meta: { requireAuth: true },
       component: Lists
     },
     {
@@ -24,7 +25,7 @@ export default new Router({
       component: Detail
     },
     {
-    path: '/list/:id',
+    path: '/delete/:id',
     name: 'delete',
     component: Lists
   }

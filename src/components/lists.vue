@@ -13,13 +13,13 @@
 	<li v-for='(list, index) in lists' @touchstart='touchstart' @touchend='touchend($event,index, setseen)'>
 	<router-link :to="{ name: 'detail', params: { id: list._id }}"> {{ list.title }} </router-link>
 	<span>
-	 {{ new Date(list.create_at).getFullYear() }} 年{{ new Date(list.create_at).getMonth() + 1 }}月
-	{{ new Date(list.create_at).getDate() + 1 }}日
-	{{ new Date(list.create_at).getHours() }}:
-	{{ new Date(list.create_at).getMinutes() }}
+	 {{ new Date(list.create_at).getFullYear() }} 年{{ new Date(list.create_at).getMonth() + 1 | getFull }}月
+	{{ new Date(list.create_at).getDate() + 1 | getFull }}日
+	{{ new Date(list.create_at).getHours() | getFull }}:
+	{{ new Date(list.create_at).getMinutes() | getFull }}
 	 </span>
-	 <div id="delete"  v-if="seen[index]">
-	 <router-link :to="{ name: 'delete', params: { id: list._id}}" @click="deletelist">
+	 <div id="delete"  v-if="seen[index]" @click="deletelist">
+	 <router-link :to="{ name: 'delete', params: { id: list._id}}" >
 	 删除
 	 </router-link>
 	 </div>
@@ -52,6 +52,15 @@ export default {
 	components: {
 		'my-footer': Footer
 	},
+	filters: {
+		getFull(value) {
+			if(value < 10) {
+				return "0" + value
+			} else {
+				return value
+			}
+		}
+	},
 	methods: {
 		getlists() {
 			this.$http.get ('/api/list')
@@ -82,6 +91,12 @@ export default {
 				this.seen.splice(index, 1, true)
 				// console.log(this.seen)
 			}
+			if(distanceY < 60 && distanceX < -80)
+			{
+				// console.log(this.seen)
+				this.seen.splice(index, 1, true)
+				// console.log(this.seen)
+			}
 		},
 		setseen() {
 			let len = this.lists.length;
@@ -90,7 +105,9 @@ export default {
 		}
 		},
 		deletelist() {
-			this.$http.delete('/api/list/' + this.$route.params.id)
+			this.$http.delete('/api/delete/' + this.$route.params.id)
+			const router = this.$router
+  			router.go({path:'/'})
 		}
 	}
 }

@@ -48,12 +48,12 @@ router.put('/list/:id', (req, res) => {
 		.catch(err => res.json(err))
 })
 //删除列表
-router.delete('/list/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
 	List.findOneAndRemove({
 		_id: req.params.id
 	})
 	.then(list => res.send(`${list.title}删除成功`))
 	.catch(err => res.json(err))
-}
+})
 
 module.exports = router
