@@ -12,6 +12,7 @@ import { sync } from 'vuex-router-sync'
 sync(store, router)
 Vue.prototype.$http = axios
 /* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   router,
