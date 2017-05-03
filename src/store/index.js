@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		token: null,
+		token: "123",
 		login: '',
 		lists: []
 	},

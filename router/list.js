@@ -1,7 +1,31 @@
 const express = require('express')
 const router = express.Router()
 const List = require('../models/lists')
-
+//用户注册
+router.post('/register', (req, res) => {
+	List.create(req.body, (err, user) => {
+		if(err) {
+			res.json(err)
+		} else {
+			res.json(user)
+		}
+	})
+})
+//用户登录
+router.get('/login', (req, res) => {
+	List.find({ user: req.body.user  })
+	.then(lists => {
+			res.json(lists[0].password)
+			if(req.body.password == lists[0].password) {
+				console.log("登录成功")
+			} else {
+				console.log("密码错误")
+			}
+	})
+	.catch(err => {
+		res.json(err)
+	})
+})
 //查看清单
 router.get('/list', (req, res) => {
 	List.find({})
