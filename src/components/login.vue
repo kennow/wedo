@@ -4,7 +4,7 @@
 		<input type="email" name="email" placeholder="please input email" v-model="email">
 		</input>
 		<input type="password" name="password" placeholder="please input password" v-model="password">
-		<input class="btn" type="submit" value="登录" @click="login">
+		<input class="btn" type="button" value="登录" @click="login">
 		<input class="btn" type="button" name="register" value="去注册" @click="gotoreg">
 	</form>
 	</div>
@@ -15,20 +15,21 @@ export default {
 	data() {
 		return {
 			email: "",
-			password: "",
-			userPwd: ""
+			password: ""
 		}
 	},
 	methods: {
 		login() {
 		if(this.email.length > 0 && this.password.length >0) {
-			this.$http.get('/api/login', {
+			this.$http.post('/api/login', {
 				user: this.email,
 				password: this.password
 			})
 			.then(res => {
-				this.userPwd = res.data
-				alert(this.password == this.userPwd)
+				let userPwd = res.data
+				if(this.password == userPwd) {
+					this.$router.push('/')
+				}
 			})
 			.catch(err => {
 				console.log(err)

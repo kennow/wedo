@@ -52,6 +52,7 @@ export default {
 		  	this.newlist.details = []
 		  	this.newlist.create_at = Date.now().toString()
 		  	this.newlist.update_at = Date.now().toString()
+		  	this.newlist.list_id = ""
 		  })
 		  .catch(e => {
 		  	console.log(e)

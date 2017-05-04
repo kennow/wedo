@@ -2,19 +2,21 @@
 <div id="lists-box">
 <div id="side-bar">
 	<div class="select">
-		
+		{{ selectByComplete }}
+		<img src="../assets/unfolded.svg" @click="showSelectBox">
 	</div>
 	<div class="select">
-		
+		{{ selectByTime }}
+		<img src="../assets/unfolded.svg">
 	</div>
 </div>
 <div id="lists">
 	<ul>
-	<li v-for='(list, index) in lists' @touchstart='touchstart' @touchend='touchend($event,index, setseen)'>
+	<li v-for='(list, index) in getByUpdate' @touchstart='touchstart' @touchend='touchend($event,index, setseen)'>
 	<router-link :to="{ name: 'detail', params: { id: list._id }}"> {{ list.title }} </router-link>
 	<span>
 	 {{ new Date(list.create_at).getFullYear() }} 年{{ new Date(list.create_at).getMonth() + 1 | getFull }}月
-	{{ new Date(list.create_at).getDate() + 1 | getFull }}日
+	{{ new Date(list.create_at).getDate() | getFull }}日
 	{{ new Date(list.create_at).getHours() | getFull }}:
 	{{ new Date(list.create_at).getMinutes() | getFull }}
 	 </span>
@@ -26,7 +28,17 @@
 	</li>
 	</ul>
 </div>
-<my-footer></my-footer>
+	<my-footer></my-footer>
+	<div @click.stop="hiddenSelectBox" :class="{ 'select-page': isDisplay}">
+	  <div class="select-box" :class="{ 'select-box-isHidden': isHidden}">
+		<ul>
+		  <li @click="showAll">全部清单</li>
+		  <li>未完成清单</li>
+		  <li>已完成清单</li>
+		  <li @click="hiddenSelectBox">取消</li>
+		</ul>
+	  </div>
+	</div>
 </div>
 </template>
 <script>
@@ -38,16 +50,21 @@ export default {
 	name: 'lists',
 	data() {
 		return {
+		 selectByComplete: "全部清单",
+		 selectByTime: "按名称排序",
 		 pageX: '',
 		 pageY: '',
-		 seen: []
+		 seen: [],
+		 isDisplay: false,
+		 isHidden: true
 		}
 	},
 	created() {
 		this.getlists()
 	},
 	computed: {
-	 ...mapState(['lists'])
+	 // ...mapState(['lists']),
+	 ...mapGetters(['getByUpdate'])
 	},
 	components: {
 		'my-footer': Footer
@@ -105,9 +122,20 @@ export default {
 		}
 		},
 		deletelist() {
-			this.$http.delete('/api/delete/' + this.$route.params.id)
+			this.$http.post('/api/delete/' + this.$route.params.id)
 			const router = this.$router
   			router.go({path:'/'})
+		},
+		showSelectBox() {
+			this.isDisplay = true
+			this.isHidden = false
+		},
+		hiddenSelectBox() {
+			this.isDisplay = false
+			this.isHidden = true
+		},
+		showAll() {
+
 		}
 	}
 }
@@ -134,6 +162,11 @@ export default {
 	height: 100%;
 	border: 1px solid #f2f3f5;;
 	background: #fff;
+	color: green;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
 }
 
 #lists {
@@ -171,5 +204,46 @@ span {
 	align-self: flex-end;
 	margin-right: 2vw;
 	z-index: 0;
+}
+
+.select-page {
+	position: absolute;
+	top: 8vh;
+	width: 99vw;
+	height: 52vh;
+	background: #000;
+	opacity: 0.8;
+	z-index: 10;
+	/*display: none;*/
+}
+
+.select-box {
+	position: absolute;
+	left: 0;
+	top: 52vh;
+	width: 99vw;
+	height: 29vh;
+	background: #fff;
+	z-index: 50;
+	/*border: 1px solid green;*/
+}
+
+.select-box-isHidden {
+	display: none;
+}
+.select-box ul {
+	margin: 0;
+	padding: 0;
+}
+
+.select-box ul li {
+	height: 2rem;
+	border: 1px solid #f2f3f5;
+	text-align: center;
+	padding: 0.2rem 0;
+}
+
+my-footer {
+	display: none;
 }
 </style>

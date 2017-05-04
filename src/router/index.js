@@ -6,6 +6,7 @@ import Addnewlist from '@/components/addnewlist'
 import Detail from '@/components/detail'
 import Login from '@/components/login'
 import Reg from '@/components/reg'
+import About from '@/components/aboutme'
 Vue.use(Router)
 
 const routes = [
@@ -40,6 +41,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Reg
+  },
+  {
+    path: '/user/:email',
+    name: 'about',
+    component: About
   }
   ];
 

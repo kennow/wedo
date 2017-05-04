@@ -6,10 +6,10 @@
 	</a>
 	<a href="/add" class="table-btn" id="add-btn"> +
 	</a>
-	<a href='/help' class="table-btn  lists">
+	<router-link :to="{ name: 'about', params: { email: 'yejia@qq.com'}}" class="table-btn  lists">
 	<img src="../assets/my.svg" alt="">
 	<span>我</span>
-	</a>
+	</router-link>
 		
 	</div>
 	</footer>

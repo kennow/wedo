@@ -12,12 +12,12 @@ router.post('/register', (req, res) => {
 	})
 })
 //用户登录
-router.get('/login', (req, res) => {
+router.post('/login', (req, res) => {
 	List.find({ user: req.body.user  })
 	.then(lists => {
-			res.json(lists[0].password)
 			if(req.body.password == lists[0].password) {
 				console.log("登录成功")
+				res.json(lists[0].password)
 			} else {
 				console.log("密码错误")
 			}
@@ -28,10 +28,9 @@ router.get('/login', (req, res) => {
 })
 //查看清单
 router.get('/list', (req, res) => {
-	List.find({})
-	.sort({ update_at: -1})
+	List.find({ user: "yejia@qq.com" })
 	.then(lists => {
-		res.json(lists)
+		res.json(lists[0].lists)
 	})
 	.catch(err => {
 		res.json(err)
@@ -39,7 +38,9 @@ router.get('/list', (req, res) => {
 })
 //添加清单
 router.post('/list', (req, res) => {
-	List.create(req.body, (err, list) => {
+	List.update({ user: "yejia@qq.com"  }, { '$push': {
+            lists:req.body
+          }}, (err, list) => {
 		if(err) {
 			res.json(err)
 		} else {
@@ -49,22 +50,38 @@ router.post('/list', (req, res) => {
 })
 //通过ObjectId查询单个list
 router.get('/list/:id', (req, res) => {
-	List.findById(req.params.id)
-	.then(list => {
-		res.json(list)
+	List.find({ user: "yejia@qq.com", "lists._id": req.params.id })
+	.then(lists => {
+		let tmplists = lists[0].lists
+		let list = tmplists.filter(function(item, index) {
+			if(item._id == req.params.id) {
+				return item
+			}
+		})
+		res.json(list[0])
 	})
 	.catch(err => {
 		res.json(err)
 	})
 })
+// router.get('/list/:id', (req, res) => {
+// 	List.findById(req.params.id)
+// 	.then(list => {
+// 		res.json(list)
+// 	})
+// 	.catch(err => {
+// 		res.json(err)
+// 	})
+// })
+
 //更新list
 router.put('/list/:id', (req, res) => {
-	List.findOneAndUpdate({_id: req.params.id},
-		{$set: { title: req.body.title,
-			details: req.body.details,
-			create_at: req.body.create_at,
-			update_at: req.body.update_at,
-			isChecked: req.body.isChecked
+	List.findOneAndUpdate({ user: "yejia@qq.com", "lists._id": req.params.id },
+		{$set: { "lists.$.title": req.body.title,
+			"lists.$.details": req.body.details,
+			"lists.$.create_at": req.body.create_at,
+			"lists.$.update_at": req.body.update_at,
+			"lists.$.isChecked": req.body.isChecked
 		 }}, {
 		 	new : true
 		 })
@@ -72,12 +89,16 @@ router.put('/list/:id', (req, res) => {
 		.catch(err => res.json(err))
 })
 //删除列表
-router.delete('/delete/:id', (req, res) => {
-	List.findOneAndRemove({
-		_id: req.params.id
+router.post('/delete/:id', (req, res) => {
+	List.update({ user: "yejia@qq.com", "lists._id": req.params.id}, {
+		"$pull": { lists: { _id: req.params.id } }
+	}, (err, list) => {
+		if(err) {
+			res.json(err)
+		} else {
+			res.json(list)
+		}
 	})
-	.then(list => res.send(`${list.title}删除成功`))
-	.catch(err => res.json(err))
 })
 
 module.exports = router

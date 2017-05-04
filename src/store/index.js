@@ -10,6 +10,16 @@ const store = new Vuex.Store({
 		login: '',
 		lists: []
 	},
+	getters: {
+	  getByUpdate: state => {
+	  	let lists = state.lists
+	  	let tmp = lists[0]
+	  	  for(let i = 0; i < lists.length; i++) {
+	  	  	
+	  	  }
+	  	return lists
+	  }
+	},
 	mutations: {
 		change(state, lists) {
 			state.lists = lists
