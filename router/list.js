@@ -17,6 +17,9 @@ router.post('/login', (req, res) => {
 	.then(lists => {
 			if(req.body.password == lists[0].password) {
 				console.log("登录成功")
+				if(req.session.user !== req.body.user) {
+					req.session.user = req.body.user
+			}
 				res.json(lists[0].password)
 			} else {
 				console.log("密码错误")
@@ -26,9 +29,32 @@ router.post('/login', (req, res) => {
 		res.json(err)
 	})
 })
+//获取用户信息
+router.get('/user', (req, res) => {
+	List.find({ user: req.session.user })
+	.then(lists => {
+		res.json(lists[0].user)
+	})
+	.catch(err => {
+		res.json(err)
+	})
+})
+
+router.get('/islogin', (req, res) => {
+	List.find({ user: req.session.user })
+	.then(lists => {
+		if(req.session.user) {
+		res.json(lists[0].user)
+	}
+	})
+	.catch(err => {
+		res.json(err)
+	})
+})
+
 //查看清单
 router.get('/list', (req, res) => {
-	List.find({ user: "yejia@qq.com" })
+	List.find({ user: req.session.user })
 	.then(lists => {
 		res.json(lists[0].lists)
 	})
@@ -38,7 +64,7 @@ router.get('/list', (req, res) => {
 })
 //添加清单
 router.post('/list', (req, res) => {
-	List.update({ user: "yejia@qq.com"  }, { '$push': {
+	List.update({ user: req.session.user  }, { '$push': {
             lists:req.body
           }}, (err, list) => {
 		if(err) {
@@ -50,7 +76,7 @@ router.post('/list', (req, res) => {
 })
 //通过ObjectId查询单个list
 router.get('/list/:id', (req, res) => {
-	List.find({ user: "yejia@qq.com", "lists._id": req.params.id })
+	List.find({ user: req.session.user, "lists._id": req.params.id })
 	.then(lists => {
 		let tmplists = lists[0].lists
 		let list = tmplists.filter(function(item, index) {
@@ -76,7 +102,7 @@ router.get('/list/:id', (req, res) => {
 
 //更新list
 router.put('/list/:id', (req, res) => {
-	List.findOneAndUpdate({ user: "yejia@qq.com", "lists._id": req.params.id },
+	List.findOneAndUpdate({ user: req.session.user, "lists._id": req.params.id },
 		{$set: { "lists.$.title": req.body.title,
 			"lists.$.details": req.body.details,
 			"lists.$.create_at": req.body.create_at,
@@ -90,7 +116,7 @@ router.put('/list/:id', (req, res) => {
 })
 //删除列表
 router.post('/delete/:id', (req, res) => {
-	List.update({ user: "yejia@qq.com", "lists._id": req.params.id}, {
+	List.update({ user: req.session.user, "lists._id": req.params.id}, {
 		"$pull": { lists: { _id: req.params.id } }
 	}, (err, list) => {
 		if(err) {

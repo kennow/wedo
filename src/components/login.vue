@@ -11,16 +11,19 @@
 </template>
 
 <script>
+import { mapAction } from 'vuex'
 export default {
 	data() {
 		return {
 			email: "",
-			password: ""
+			password: "",
+			secret: ''
 		}
 	},
 	methods: {
 		login() {
 		if(this.email.length > 0 && this.password.length >0) {
+			let that = this
 			this.$http.post('/api/login', {
 				user: this.email,
 				password: this.password
@@ -29,6 +32,10 @@ export default {
 				let userPwd = res.data
 				if(this.password == userPwd) {
 					this.$router.push('/')
+					this.$http.get('/api/islogin')
+					.then(res => {
+						this.secret = res.data
+					})
 				}
 			})
 			.catch(err => {
@@ -41,6 +48,11 @@ export default {
 		gotoreg() {
 			this.$router.push("/register")
 		}
+	},
+	watch: {
+		'isLogined': function() {
+			console.log(111)
+			}
 	}
 }
 </script>

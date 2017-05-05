@@ -19,6 +19,7 @@ const routes = [
     {
       path: '/add',
       name: 'add',
+      meta: { requiresAuth: true },
       component: Addnewlist
     },
     {
@@ -30,6 +31,7 @@ const routes = [
     {
     path: '/delete/:id',
     name: 'delete',
+    meta: { requiresAuth: true },
     component: Lists
   },
   {
@@ -45,14 +47,16 @@ const routes = [
   {
     path: '/user/:email',
     name: 'about',
+    meta: { requiresAuth: true },
     component: About
   }
   ];
 
-// 页面刷新时，重新赋值token
-if (window.localStorage.getItem('token')) {
-    store.commit(store.state.login, window.localStorage.getItem('token'))
-}
+// // 页面刷新时，重新赋值token
+// if (window.localStorage.getItem('token')) {
+//     store.dispath('isLogin', {
+//       secret: window.localStorage.getItem('token')})
+// }
 
 const router = new Router({
   mode: 'history',

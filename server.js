@@ -1,7 +1,10 @@
 const pkg = require('./package')
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 const mongoose = require('mongoose')
+const MongoStore = require('connect-mongo')(session)
 const index = require('./router/index')
 const list = require('./router/list')
 
@@ -12,8 +15,19 @@ mongoose.Promise = global.Promise
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
+app.use(session({
+	secret: 'lists',
+	resave: true,
+	saveUninitialized: true,
+	cookie: { user: "default", maxAge: 1000 * 60 * 60 * 24 * 30 },//30天
+	store: new MongoStore({
+		mongooseConnection: mongoose.connection
+	})
+	}))
+
 app.use(express.static('dist'))
 app.use('/', index)
 app.use('/api', list)

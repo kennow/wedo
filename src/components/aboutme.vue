@@ -4,18 +4,22 @@
 	<div id="avatar">
 	</div>
 	<span id="user">
-	{{ user }}
+	{{ this.user }}
 	</span>
 	</div>
 	</div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			user: "yejia@qq.com"
+			
 		}
+	},
+	computed: {
+		...mapState(['user'])
 	}
 }
 

@@ -6,7 +6,7 @@
 	</a>
 	<a href="/add" class="table-btn" id="add-btn"> +
 	</a>
-	<router-link :to="{ name: 'about', params: { email: 'yejia@qq.com'}}" class="table-btn  lists">
+	<router-link :to="{ name: 'about', params: { email: this.user }}" class="table-btn  lists">
 	<img src="../assets/my.svg" alt="">
 	<span>我</span>
 	</router-link>
@@ -16,6 +16,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+	export default {
+		data() {
+			return {
+
+			}
+		},
+		computed: {
+			...mapState(['user'])
+		}
+	}
 </script>
 
 <style>
