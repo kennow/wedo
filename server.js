@@ -22,7 +22,7 @@ app.use(session({
 	secret: 'lists',
 	resave: true,
 	saveUninitialized: true,
-	cookie: { user: "default", maxAge: 1000 * 60 * 60 * 24 * 30 },//30天
+	cookie: { user: "default", maxAge: 1000 * 60 * 60 * 2 },//2天
 	store: new MongoStore({
 		mongooseConnection: mongoose.connection
 	})

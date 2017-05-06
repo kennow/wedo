@@ -6,9 +6,9 @@ import store from './store'
 import axios from 'axios'
 import router from './router'
 import { sync } from 'vuex-router-sync'
-
+import vueCookie from 'vue-cookie'
 // Vue.config.productionTip = false
-
+Vue.use(vueCookie)
 sync(store, router)
 Vue.prototype.$http = axios
 /* eslint-disable no-new */

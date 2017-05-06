@@ -7,7 +7,7 @@ router.post('/register', (req, res) => {
 		if(err) {
 			res.json(err)
 		} else {
-			res.json(user)
+			res.json('注册成功！')
 		}
 	})
 })
@@ -19,16 +19,24 @@ router.post('/login', (req, res) => {
 				console.log("登录成功")
 				if(req.session.user !== req.body.user) {
 					req.session.user = req.body.user
+				    res.cookie('wedo', req.body.user, { expires: new Date(Date.now() + 1000 * 60 * 60 * 2)} )
 			}
-				res.json(lists[0].password)
+				res.json(lists[0].user)
 			} else {
 				console.log("密码错误")
+				res.json(null)
 			}
 	})
 	.catch(err => {
 		res.json(err)
 	})
 })
+
+router.get('/logout', (req, res) => {
+	res.clearCookie('wedo')
+	res.clearCookie('connect.sid')
+	res.json('成功登出！')
+	})
 //获取用户信息
 router.get('/user', (req, res) => {
 	List.find({ user: req.session.user })

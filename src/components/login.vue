@@ -17,7 +17,7 @@ export default {
 		return {
 			email: "",
 			password: "",
-			secret: ''
+			isLogined: this.$cookie.get('wedo')
 		}
 	},
 	methods: {
@@ -30,12 +30,10 @@ export default {
 			})
 			.then(res => {
 				let userPwd = res.data
-				if(this.password == userPwd) {
+				if(userPwd) {
+					this.$store.dispatch('isLogin', {
+      					secret: this.$cookie.get('wedo')})
 					this.$router.push('/')
-					this.$http.get('/api/islogin')
-					.then(res => {
-						this.secret = res.data
-					})
 				}
 			})
 			.catch(err => {
@@ -47,12 +45,15 @@ export default {
 		},
 		gotoreg() {
 			this.$router.push("/register")
+		},
+		redirect() {
+			if(this.isLogined) {
+				this.$router.push('/')
+			}
 		}
 	},
-	watch: {
-		'isLogined': function() {
-			console.log(111)
-			}
+	created() {
+		this.redirect()
 	}
 }
 </script>

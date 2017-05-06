@@ -4,7 +4,7 @@
 		<input type="email" name="email" v-model="email" placeholder="please input email">
 		</input>
 		<input type="password" name="password" v-model="password" placeholder="please input password">
-		<input class="btn"  value="注册" @click="canRegister">
+		<input class="btn" type="button" value="注册" @click="canRegister">
 		<input class="btn" type="button" name="register" value="去登录" @click="gotologin">
 	</form>
 	</div>

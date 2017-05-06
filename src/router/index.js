@@ -8,7 +8,7 @@ import Login from '@/components/login'
 import Reg from '@/components/reg'
 import About from '@/components/aboutme'
 Vue.use(Router)
-
+import vueCookie from 'vue-cookie'
 const routes = [
     {
       path: '/',
@@ -52,11 +52,11 @@ const routes = [
   }
   ];
 
-// // 页面刷新时，重新赋值token
-// if (window.localStorage.getItem('token')) {
-//     store.dispath('isLogin', {
-//       secret: window.localStorage.getItem('token')})
-// }
+// 页面刷新时，重新赋值token
+if (vueCookie.get('wedo')) {
+    store.dispatch('isLogin', {
+      secret: vueCookie.get('wedo')})
+}
 
 const router = new Router({
   mode: 'history',

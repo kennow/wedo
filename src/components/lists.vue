@@ -260,7 +260,6 @@ export default {
 }
 
 </script>
-
 <style scoped>
 #lists-box {
 	width: 100vw;
