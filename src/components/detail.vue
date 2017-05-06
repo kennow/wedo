@@ -71,7 +71,9 @@ export default {
 #addtitle {
 	width: 98vw;
 	height: 5vh;
-	margin-top: 1vh;
+	margin: 1vh 0;
+	font-size: 2vh;
+	border: 1vh solid #fff;
 }
 
 ul {
@@ -80,9 +82,8 @@ ul {
 }
 li {
 	width: 100vw;
-	height: 6vh;
-	margin: 1vh 0;
-	border-bottom: 1px solid #fff;
+	height: 7vh;
+	margin: 0.5vh 0;
 	background-color: #fff;
 	display: flex;
 	direction: row;
@@ -92,13 +93,15 @@ li {
 #checkbox {
 	width: 3vh;
 	height: 3vh;
+	border: 2vh solid #000;
 	background: #fff;
 }
 
 #addlist {
-	height: 4.4vh;
+	height: 6vh;
 	width: 96vw;
 	border: none;
+	font-size: 2vh;
 }
 
 #add {
@@ -107,7 +110,8 @@ li {
 	width: 20vw;
 	height: 5vh;
 	margin-top: 2vh;
-	border-radius: 5px;
+	border-radius: 1vh;
+	font-size: 2.5vh;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -121,5 +125,6 @@ li {
 	height: 6vh;
 	background-color: green;
 	color: #fff;
+	font-size: 3vh;
 }
 </style>

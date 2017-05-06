@@ -14,8 +14,8 @@
 	<ul>
 	<li v-for='(list, index) in lists' @touchstart='touchstart' @touchend='touchend($event,index, setseen)'>
 	<router-link :to="{ name: 'detail', params: { id: list._id }}"> {{ list.title }} </router-link>
-	<span>
-	 {{ new Date(list.update_at).getFullYear() }} 年{{ new Date(list.update_at).getMonth() + 1 | getFull }}月
+	<span id="time">
+	 {{ new Date(list.update_at).getFullYear() }}年{{ new Date(list.update_at).getMonth() + 1 | getFull }}月
 	{{ new Date(list.update_at).getDate() | getFull }}日
 	{{ new Date(list.update_at).getHours() | getFull }}:
 	{{ new Date(list.create_at).getMinutes() | getFull }}
@@ -28,7 +28,7 @@
 	</li>
 	</ul>
 </div>
-	<my-footer></my-footer>
+	<my-footer :class="{ 'my-footer': isDisplay || isDisplay2}"></my-footer>
 	<div @click.stop="hiddenSelectBox" :class="{ 'select-page': isDisplay}">
 	  <div class="select-box" :class="{ 'select-box-isHidden': isHidden}">
 		<ul>
@@ -281,10 +281,15 @@ export default {
 	border: 1px solid #f2f3f5;;
 	background: #fff;
 	color: green;
-	font-size: 14px;
+	font-size: 2.5vh;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+}
+
+.select img {
+	width: 2.5vh;
+	height: 2.5vh;
 }
 
 #lists {
@@ -297,12 +302,12 @@ export default {
 }
 
 #lists li {
-	height: 10vh;
+	height: 8vh;
 	list-style-type: none;
 	background-color: #fff;
-	border-bottom: 0.2rem solid #f2f3f5;
-	font-size: 1.2rem;
-	padding-left: 1rem;
+	border-bottom: 0.4vh solid #f2f3f5;
+	font-size: 3vh;
+	padding-left: 3vw;
 	flex-direction: column;
 	flex-wrap: wrap;
 	display: flex;
@@ -312,10 +317,11 @@ a {
 	text-decoration: none;
 	color: #000;
 }
-span {
-	font-size: 0.8rem;
+#time {
+	font-size: 2vh;
 	opacity: 0.5;
 }
+
 #delete {
 	padding: 0.5rem 1rem;
 	background: red;
@@ -330,7 +336,7 @@ span {
 	width: 99vw;
 	height: 52vh;
 	background: #000;
-	opacity: 0.8;
+	opacity: 0.6;
 	z-index: 10;
 	/*display: none;*/
 }
@@ -355,13 +361,15 @@ span {
 }
 
 .select-box ul li {
-	height: 2rem;
-	border: 1px solid #f2f3f5;
-	text-align: center;
-	padding: 0.2rem 0;
+	height: 7vh;
+	border: 0.2vh solid #f2f3f5;
+	font-size: 2vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-my-footer {
-	display: none;
+.my-footer {
+	opacity: 0;
 }
 </style>

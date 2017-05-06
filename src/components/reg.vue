@@ -1,11 +1,14 @@
 <template>
 	<div id="login-box">
 	<form>
+		<div id="tips">
+		请使用邮箱注册
+		</div>
 		<input type="email" name="email" v-model="email" placeholder="please input email">
 		</input>
 		<input type="password" name="password" v-model="password" placeholder="please input password">
 		<input class="btn" type="button" value="注册" @click="canRegister">
-		<input class="btn" type="button" name="register" value="去登录" @click="gotologin">
+		<input class="btn" type="button" name="register" value="已有帐号？去登录" @click="gotologin">
 	</form>
 	</div>
 </template>
@@ -51,12 +54,13 @@ export default {
 	width: 100vw;
 	height: 88vh;
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 }
+
 
 form {
 	width: 100vw;
-	height: 30vh;
+	/*height: 30vh;*/
 	background: #fff;
 	display: flex;
 	align-items: center;
@@ -65,9 +69,20 @@ form {
 
 }
 
+#tips {
+	width: 90vw;
+	height: 10vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 3vh;
+}
 input {
 	width: 90vw;
 	height: 10vw;
+	margin-top: 1vh;
+	border: 0.2vh solid #f2f3f5; 
+	font-size: 2vh;
 }
 
 .btn {

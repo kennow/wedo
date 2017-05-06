@@ -2,14 +2,18 @@
 	<div id="about-box">
 		<div id="info-box">
 			<div id="avatar">
+				<img src="../assets/avatar.jpg" alt="">
 			</div>
 			<span id="user">
 			{{ this.user }}
 			</span>
 		</div>
 		<ul>
-			<li>使用帮助</li>
-			<li @click="logout">登出</li>
+			<li>使用帮助<img src="../assets/unfolded2.svg"></li>
+			<li>联系作者<img src="../assets/unfolded2.svg"></li>
+			<li>设置<img src="../assets/unfolded2.svg"></li>
+			<li @click="logout">登出<img src="../assets/unfolded2.svg"></li>
+			<li id="version">版本号:v1.0.0</li>
 		</ul>
 	</div>
 </template>
@@ -35,7 +39,7 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
-	
+
 			this.$cookie.set('wedo', null)
 			this.$store.dispatch('isLogin', {
 				secret: null
@@ -61,13 +65,14 @@ ul, li {
 #info-box {
 	width: 100vw;
 	height: 30vh;
-	background: green;
-	opacity: 0.5;
+	/*opacity: 0.5;*/
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	flex-wrap: wrap;
 	align-items: center;
+	background-image: url('../assets/infobg.jpg');
+	background-size: 100vw 30vh;
 }
 
 #avatar {
@@ -76,20 +81,41 @@ ul, li {
 	border-radius: 50%;
 	background: #fff;
 	margin: 0 5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 12;
 }
 
+#avatar img {
+	width: 11vh;
+	height: 11vh;
+	border-radius: 50%;
+}
 #user {
 	color: #fff;
 	margin-top: 2vh;
 	font-size: 3vh;
 }
 
-#logout {
-
-}
 li {
-	padding: 1vh;
-	border: 0.2vh solid #f2f3f5;
-	font-size: 3vh;
+	min-height: 6vh;
+	padding: 0 2vh;
+	border: 0.3vh solid #f2f3f5;
+	font-size: 2.5vh;
+	/*opacity: 0.5;*/
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+li img {
+	height: 2vh;
+	width: 2vh;
+}
+
+#version {
+	border: none;
+	padding: 0  35vw;
+	opacity: 0.5;
 }
 </style>

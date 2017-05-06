@@ -31,7 +31,7 @@ export default {
 	left: 0;
 	width: 100vw;
 	height: 10vh;
-	font-size: 2rem;
+	font-size: 5vh;
 	color: #fff;
 	text-align: center;
 	background-color: green;
