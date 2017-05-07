@@ -9,53 +9,56 @@ import Reg from '@/components/reg'
 import About from '@/components/aboutme'
 Vue.use(Router)
 import vueCookie from 'vue-cookie'
-const routes = [
-    {
-      path: '/',
-      name: 'lists',
-      meta: { requiresAuth: true },
-      component: Lists
-    },
-    {
-      path: '/add',
-      name: 'add',
-      meta: { requiresAuth: true },
-      component: Addnewlist
-    },
-    {
-      path: '/list/:id',
-      name: 'detail',
-      meta: { requiresAuth: true},
-      component: Detail
-    },
-    {
-    path: '/delete/:id',
-    name: 'delete',
-    meta: { requiresAuth: true },
-    component: Lists
+const routes = [{
+  path: '/',
+  name: 'lists',
+  meta: {
+    requiresAuth: true
   },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login
+  component: Lists
+}, {
+  path: '/add',
+  name: 'add',
+  meta: {
+    requiresAuth: true
   },
-  {
-    path: '/register',
-    name: 'register',
-    component: Reg
+  component: Addnewlist
+}, {
+  path: '/list/:id',
+  name: 'detail',
+  meta: {
+    requiresAuth: true
   },
-  {
-    path: '/user/:email',
-    name: 'about',
-    meta: { requiresAuth: true },
-    component: About
-  }
-  ];
+  component: Detail
+}, {
+  path: '/delete/:id',
+  name: 'delete',
+  meta: {
+    requiresAuth: true
+  },
+  component: Lists
+}, {
+  path: '/login',
+  name: 'login',
+  component: Login
+}, {
+  path: '/register',
+  name: 'register',
+  component: Reg
+}, {
+  path: '/user/:email',
+  name: 'about',
+  meta: {
+    requiresAuth: true
+  },
+  component: About
+}];
 
 // 页面刷新时，重新赋值token
 if (vueCookie.get('wedo')) {
-    store.dispatch('isLogin', {
-      secret: vueCookie.get('wedo')})
+  store.dispatch('isLogin', {
+    secret: vueCookie.get('wedo')
+  })
 }
 
 const router = new Router({
@@ -68,13 +71,15 @@ router.beforeEach((to, from, next) => {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (store.state.token) {
-          next();
-      } else {
-        next({
-          path: '/login',
-          query: {redirect: to.fullPath}
-         })
+      next();
+    } else {
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
         }
+      })
+    }
   } else {
     next() // 确保一定要调用 next()
   }

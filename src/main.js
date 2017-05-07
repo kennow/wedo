@@ -5,13 +5,16 @@ import App from './App'
 import store from './store'
 import axios from 'axios'
 import router from './router'
-import { sync } from 'vuex-router-sync'
+import {
+  sync
+}
+from 'vuex-router-sync'
 import vueCookie from 'vue-cookie'
-// Vue.config.productionTip = false
+  // Vue.config.productionTip = false
 Vue.use(vueCookie)
 sync(store, router)
 Vue.prototype.$http = axios
-/* eslint-disable no-new */
+  /* eslint-disable no-new */
 
 new Vue({
   el: '#app',
@@ -19,5 +22,7 @@ new Vue({
   store,
   render: h => h(App),
   template: '<App/>',
-  components: { App }
+  components: {
+    App
+  }
 })
