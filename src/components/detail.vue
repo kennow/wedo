@@ -15,8 +15,7 @@
 </template>
 
 <script>
-  export
-  default {
+  export default {
     name: 'adddetail',
     data() {
       return {

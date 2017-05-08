@@ -45,23 +45,16 @@ const store = new Vuex.Store({
       }
   },
   actions: {
-    changelist({
-        commit
-      }, payload) {
+    changelist({ commit }, payload) {
         commit('change', payload.lists)
       },
-      getInfo({
-        commit
-      }, payload) {
+      getInfo({ commit }, payload) {
         commit('getInfo', payload.user)
       },
-      isLogin({
-        commit
-      }, payload) {
+      isLogin({ commit }, payload) {
         commit('isLogin', payload.secret)
       }
   }
 })
 
-export
-default store
+export default store

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+  //定义list模式
 const chidrenSchema = mongoose.Schema({
   title: String,
   details: Array,
@@ -7,7 +7,7 @@ const chidrenSchema = mongoose.Schema({
   update_at: Date,
   isChecked: Array
 })
-
+  //定义数据模式
 const listSchema = mongoose.Schema({
   user: {
     type: String,

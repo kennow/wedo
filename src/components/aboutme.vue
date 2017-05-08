@@ -35,8 +35,7 @@
     mapAction
   }
   from 'vuex'
-  export
-  default {
+  export default {
     data() {
         return {
 

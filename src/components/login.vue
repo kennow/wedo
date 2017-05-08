@@ -12,12 +12,8 @@
 </template>
 
 <script>
-  import {
-    mapAction
-  }
-  from 'vuex'
-  export
-  default {
+  import { mapAction } from 'vuex'
+  export default {
     data() {
         return {
           email: "",

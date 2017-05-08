@@ -54,20 +54,6 @@ router.get('/user', (req, res) => {
     })
 })
 
-router.get('/islogin', (req, res) => {
-  List.find({
-      user: req.session.user
-    })
-    .then(lists => {
-      if (req.session.user) {
-        res.json(lists[0].user)
-      }
-    })
-    .catch(err => {
-      res.json(err)
-    })
-})
-
 //查看清单
 router.get('/list', (req, res) => {
     List.find({
